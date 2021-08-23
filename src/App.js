@@ -21,9 +21,18 @@ function App() {
     // console.log(repos);
   };
 
-  return repos.length > 0 ? (
-    <RepoTable repos={repos} octokit={octokit} setRepos={setRepos} />
-  ) : null;
+  return (
+    <div className="m-6">
+      <div className="pb-5 border-b border-gray-200">
+        <h3 className="text-lg leading-6 font-medium text-gray-900">
+          Mark GitHub repositories as private
+        </h3>
+      </div>
+      {repos.length > 0 ? (
+        <RepoTable repos={repos} octokit={octokit} setRepos={setRepos} />
+      ) : null}
+    </div>
+  );
 }
 
 export default App;
