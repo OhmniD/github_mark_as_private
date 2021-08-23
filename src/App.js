@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import RepoTable from "./components/RepoTable";
+import { pat } from "./services/auth";
+import { Octokit } from "@octokit/core";
+import { useState, useEffect } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [repos, setRepos] = useState([]);
+
+  useEffect(() => {
+    getRepos();
+  }, []);
+
+  const octokit = new Octokit({
+    auth: pat.key,
+  });
+
+  const getRepos = async () => {
+    const repos = await octokit.request("GET /user/repos");
+    setRepos(repos);
+    console.log(repos);
+  };
+
+  return <RepoTable repos={repos} />;
 }
 
 export default App;
