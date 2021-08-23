@@ -18,10 +18,12 @@ function App() {
   const getRepos = async () => {
     const repos = await octokit.request("GET /user/repos");
     setRepos(repos.data);
-    console.log(repos);
+    // console.log(repos);
   };
 
-  return <RepoTable repos={repos} />;
+  return repos.length > 0 ? (
+    <RepoTable repos={repos} octokit={octokit} setRepos={setRepos} />
+  ) : null;
 }
 
 export default App;
