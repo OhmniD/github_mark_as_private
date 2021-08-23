@@ -1,4 +1,4 @@
-import { EyeOffIcon } from "@heroicons/react/solid";
+import { EyeOffIcon, EyeIcon } from "@heroicons/react/solid";
 
 export default function Button({ repo, handleClick }) {
 	const publicButton = {
@@ -22,7 +22,11 @@ export default function Button({ repo, handleClick }) {
 			}
 		>
 			{repo.private ? publicButton.buttonText : privateButton.buttonText}
-			<EyeOffIcon className="ml-3 -mr-1 h-5 w-5" aria-hidden="true" />
+			{repo.private ? (
+				<EyeIcon className="ml-3 -mr-1 h-5 w-5" aria-hidden="true" />
+			) : (
+				<EyeOffIcon className="ml-3 -mr-1 h-5 w-5" aria-hidden="true" />
+			)}
 		</button>
 	);
 }

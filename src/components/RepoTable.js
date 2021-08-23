@@ -1,51 +1,26 @@
 /* This example requires Tailwind CSS v2.0+ */
-import Button from "./Button";
-import GreyedOutButton from "./GreyedOutButton";
-import { useState, useEffect } from "react";
+
+// import { useState, useEffect } from "react";
+import RepoListItem from "./RepoListItem";
 
 export default function RepoTable({ repos, setRepos, octokit }) {
-	const handleClick = async (repo) => {
-		await octokit.request(`PATCH /repos/${repo.full_name}`, {
-			private: !repo.private,
-		});
-		const repoToRemove = repos.findIndex(
-			(repository) => repo.id === repository.id
-		);
-		repo.private = !repo.private;
-		repos.splice(repoToRemove, 1, repo);
-		setRepos([...repos]);
-	};
+	// const [repoNodes, setRepoNodes] = useState([]);
 
-	const [repoNodes, setRepoNodes] = useState([]);
+	const repoNodes = repos.map((repo, repoIdx) => (
+		<RepoListItem
+			repo={repo}
+			repoIdx={repoIdx}
+			repos={repos}
+			setRepos={setRepos}
+			octokit={octokit}
+			key={repo.id}
+		/>
+	));
 
-	useEffect(() => {
-		const nodes = repos.map((repo, repoIdx) => (
-			<tr
-				key={repo.id}
-				className={repoIdx % 2 === 0 ? "bg-white" : "bg-gray-50"}
-			>
-				<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-					{repo.name}
-				</td>
-				<td className="px-6 py-4 text-sm text-gray-500">{repo.owner.login}</td>
-				<td className="px-6 py-4 text-sm text-gray-500">{repo.description}</td>
-				<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-					{repo.language}
-				</td>
-				<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-					{repo.private ? "Yes" : "No"}
-				</td>
-				<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-					{repo.fork ? (
-						<GreyedOutButton />
-					) : (
-						<Button repo={repo} handleClick={handleClick} />
-					)}
-				</td>
-			</tr>
-		));
-		setRepoNodes(nodes);
-	}, [repos]);
+	// useEffect(() => {
+
+	// 	setRepoNodes(nodes);
+	// }, [repos]);
 
 	return (
 		<div className="flex flex-col">
@@ -91,7 +66,7 @@ export default function RepoTable({ repos, setRepos, octokit }) {
 									></th>
 								</tr>
 							</thead>
-							<tbody>{repos && repoNodes}</tbody>
+							<tbody>{repos.length > 0 ? repoNodes : null}</tbody>
 						</table>
 					</div>
 				</div>

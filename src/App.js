@@ -19,7 +19,7 @@ function App() {
 		const repos = await octokit.request("GET /user/repos", { per_page: 100 });
 
 		setRepos(repos.data.filter((repo) => repo.owner.login === pat.username));
-		// console.log(repos);
+		console.log(repos);
 	};
 
 	return (
@@ -30,7 +30,7 @@ function App() {
 				</h3>
 			</div>
 			{repos.length > 0 ? (
-				<RepoTable repos={repos} octokit={octokit} setRepos={setRepos} />
+				<RepoTable repos={repos} setRepos={setRepos} octokit={octokit} />
 			) : null}
 		</div>
 	);
