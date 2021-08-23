@@ -8,11 +8,13 @@ At the end of the CodeClan Professional Software Development course, I wanted to
 
 - Download/clone the repo into a folder on your local computer
 - Navigate to that using the command line and run `npm install`
-- While that is downloading and installing, get a Personal Access Token for your GitHub account (make sure it has read/write access to all your reps)
+- While that is downloading and installing, get a Personal Access Token for your GitHub account (make sure it has read/write access to all your repos)
 - In the services folder, rename auth.template.js to auth.js
 - Open this and paste in your PAT where prompted
 - Start the server using `npm start`
 - Browse to http://localhost:3000 and you should see your repos listed, and be able to mark any public ones as private
+
+## Issues
 - The maximum number of repos this can display is 100, if you want to add more you'll have to add pagination (see GitHub API documentation)
 - BE CAREFUL TO ONLY MARK YOUR OWN REPOS AS PRIVATE (if you like you could modify the code to only show your repos)
 - May break if you try to mark a forked repo as private
