@@ -17,7 +17,7 @@ function App() {
 
   const getRepos = async () => {
     const repos = await octokit.request("GET /user/repos");
-    setRepos(repos);
+    setRepos(repos.data);
     console.log(repos);
   };
 

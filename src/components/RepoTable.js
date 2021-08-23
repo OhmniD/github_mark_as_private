@@ -1,21 +1,25 @@
 /* This example requires Tailwind CSS v2.0+ */
-const people = [
-  {
-    name: "Jane Cooper",
-    title: "Regional Paradigm Technician",
-    role: "Admin",
-    email: "jane.cooper@example.com",
-  },
-  {
-    name: "Cody Fisher",
-    title: "Product Directives Officer",
-    role: "Owner",
-    email: "cody.fisher@example.com",
-  },
-  // More people...
-];
+import Button from "./Button";
 
-export default function RepoTable() {
+export default function RepoTable({ repos }) {
+  const repoNodes = repos.map((repo, repoIdx) => (
+    <tr key={repo.id} className={repoIdx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+        {repo.name}
+      </td>
+      <td className="px-6 py-4 text-sm text-gray-500">{repo.description}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        {repo.language}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        {repo.private ? "Yes" : "No"}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        {!repo.private ? <Button /> : null}
+      </td>
+    </tr>
+  ));
+
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -34,54 +38,23 @@ export default function RepoTable() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Title
+                    Description
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Email
+                    Language
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Role
-                  </th>
-                  <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only">Edit</span>
+                    Private?
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {people.map((person, personIdx) => (
-                  <tr
-                    key={person.email}
-                    className={personIdx % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {person.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.title}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.role}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <a
-                        href="#"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        Edit
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              <tbody>{repos && repoNodes}</tbody>
             </table>
           </div>
         </div>
