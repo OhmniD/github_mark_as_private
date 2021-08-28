@@ -10,6 +10,7 @@ function App() {
   const [repos, setRepos] = useState([]);
   const [pageNumbers, setPageNumbers] = useState([]);
   const [totalRepos, setTotalRepos] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     getRepos();
@@ -53,6 +54,7 @@ function App() {
 
   const handlePaginationClick = (pageNumber) => {
     getRepos(pageNumber);
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -69,6 +71,7 @@ function App() {
         handlePaginationClick={handlePaginationClick}
         pageNumbers={pageNumbers}
         totalRepos={totalRepos}
+        currentPage={currentPage}
       />
     </div>
   );

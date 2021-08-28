@@ -8,7 +8,7 @@ At the end of the CodeClan Professional Software Development course, I wanted to
 
 - Download/clone the repo into a folder on your local computer
 - Navigate to that using the command line and run `npm install`
-- While that is downloading and installing, get a Personal Access Token for your GitHub account (make sure it has read/write access to all your repos)
+- While that is downloading and installing, get a Personal Access Token for your GitHub account (make sure it has read/write access to all your repos and read access to your user)
 - In the services folder, rename auth.template.js to auth.js
 - Open this and paste in your PAT where prompted, also enter your GitHub username (this is case sensitive)
 - Start the server using `npm start`
