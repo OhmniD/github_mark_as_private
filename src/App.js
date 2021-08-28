@@ -3,37 +3,75 @@ import RepoTable from "./components/RepoTable";
 import { pat } from "./services/auth";
 import { Octokit } from "@octokit/core";
 import { useState, useEffect } from "react";
+import Pagination from "./components/Pagination";
+import parseLinkHeader from "parse-link-header";
 
 function App() {
-	const [repos, setRepos] = useState([]);
+  const [repos, setRepos] = useState([]);
+  const [pageNumbers, setPageNumbers] = useState([]);
+  const [totalRepos, setTotalRepos] = useState(0);
 
-	useEffect(() => {
-		getRepos();
-	}, []);
+  useEffect(() => {
+    getRepos();
+  }, []);
 
-	const octokit = new Octokit({
-		auth: pat.key,
-	});
+  const octokit = new Octokit({
+    auth: pat.key,
+  });
 
-	const getRepos = async () => {
-		const repos = await octokit.request("GET /user/repos", { per_page: 100 });
+  const getRepos = async (pageNumber) => {
+    const repos = await octokit.request("GET /user/repos", {
+      page: pageNumber,
+      per_page: 3,
+      affiliation: "owner",
+    });
 
-		setRepos(repos.data.filter((repo) => repo.owner.login === pat.username));
-		console.log(repos);
-	};
+    setRepos(repos.data);
 
-	return (
-		<div className="m-6">
-			<div className="pb-5 border-b border-gray-200">
-				<h3 className="text-lg leading-6 font-medium text-gray-900">
-					Mark GitHub repositories as private
-				</h3>
-			</div>
-			{repos.length > 0 ? (
-				<RepoTable repos={repos} setRepos={setRepos} octokit={octokit} />
-			) : null}
-		</div>
-	);
+    if (pageNumbers.length === 0) {
+      getPageNumbers(repos);
+      getTotalRepos();
+    }
+  };
+
+  const getTotalRepos = async () => {
+    const user = await octokit.request("GET /user");
+    console.log(user);
+
+    setTotalRepos(user.data.public_repos + user.data.total_private_repos);
+  };
+
+  const getPageNumbers = (repos) => {
+    const links = parseLinkHeader(repos.headers.link);
+    console.log(links);
+    const pageNumbers = [];
+    for (let i = 1; i <= parseInt(links.last.page); i++) {
+      pageNumbers.push(i);
+    }
+    setPageNumbers(pageNumbers);
+  };
+
+  const handlePaginationClick = (pageNumber) => {
+    getRepos(pageNumber);
+  };
+
+  return (
+    <div className="m-6">
+      <div className="pb-5 border-b border-gray-200">
+        <h3 className="text-lg leading-6 font-medium text-gray-900">
+          Mark GitHub repositories as private
+        </h3>
+      </div>
+      {repos.length > 0 ? (
+        <RepoTable repos={repos} setRepos={setRepos} octokit={octokit} />
+      ) : null}
+      <Pagination
+        handlePaginationClick={handlePaginationClick}
+        pageNumbers={pageNumbers}
+        totalRepos={totalRepos}
+      />
+    </div>
+  );
 }
 
 export default App;
