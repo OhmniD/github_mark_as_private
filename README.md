@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-At the end of the CodeClan Professional Software Development course, I wanted to mark all my GitHub coursework repos as private - a cumbersome manual process using the GitHub GUI. I wrote this quick and diry React app to retrieve all your GitHub repos, any that are marked as public will have a button to toggle them between public and private. I have implemented a filter to only show repos for your username, just in case you accidentally mark someone else's shared repo as private! Repos that are forks cannot be made private, if there is any other cases that cause the program to fail please let me know.
+At the end of the CodeClan Professional Software Development course, I wanted to mark all my GitHub coursework repos as private - a cumbersome manual process using the GitHub GUI. I wrote this quick and dirty React app to retrieve all your GitHub repos, any that are marked as public will have a button to toggle them between public and private. I have implemented a filter to only show repos for your username, just in case you accidentally mark someone else's shared repo as private! Repos that are forks cannot be made private, if there is any other cases that cause the program to fail please let me know.
 
 ## Instructions
 
