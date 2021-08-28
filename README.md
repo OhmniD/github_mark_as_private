@@ -14,8 +14,8 @@ At the end of the CodeClan Professional Software Development course, I wanted to
 - Start the server using `npm start`
 - Browse to http://localhost:3000 and you should see your repos listed, and be able to mark any public ones as private
 
-## Issues
+## Other notes
 
-- The maximum number of repos this can display is 100, if you want to add more you'll have to add pagination (see GitHub API documentation)
+- I made the pagination size 7 items so each page would fit on my laptop screen without scrolling (because I was proud I got pagination to work!) - change this by modifying the variable perPage on line 15 of App.js (up to a maximum of 100)
 
 ![github-private](./readme_images/app_screenshot.png)

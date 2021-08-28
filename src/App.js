@@ -12,6 +12,8 @@ function App() {
   const [totalRepos, setTotalRepos] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const perPage = 7;
+
   useEffect(() => {
     getRepos();
   }, []);
@@ -23,7 +25,7 @@ function App() {
   const getRepos = async (pageNumber) => {
     const repos = await octokit.request("GET /user/repos", {
       page: pageNumber,
-      per_page: 3,
+      per_page: perPage,
       affiliation: "owner",
     });
 
@@ -37,14 +39,12 @@ function App() {
 
   const getTotalRepos = async () => {
     const user = await octokit.request("GET /user");
-    console.log(user);
 
     setTotalRepos(user.data.public_repos + user.data.total_private_repos);
   };
 
   const getPageNumbers = (repos) => {
     const links = parseLinkHeader(repos.headers.link);
-    console.log(links);
     const pageNumbers = [];
     for (let i = 1; i <= parseInt(links.last.page); i++) {
       pageNumbers.push(i);
@@ -72,6 +72,7 @@ function App() {
         pageNumbers={pageNumbers}
         totalRepos={totalRepos}
         currentPage={currentPage}
+        perPage={perPage}
       />
     </div>
   );
